@@ -149,9 +149,6 @@ export const Footer = ({ locale }: FooterProps) => {
         {/* Bottom Copyright Bar */}
         <div className="mt-12 pt-8 border-t border-gray-800">
           <div className="flex items-center gap-3">
-            <Link href={`/${locale}`} className="text-xl font-bold text-white">
-              TurtleWax
-            </Link>
             <span className="text-sm text-gray-400">
               Copyright © {new Date().getFullYear()} Turtle Wax.
             </span>
