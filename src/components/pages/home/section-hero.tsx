@@ -16,9 +16,9 @@ export const SectionHero = async ({ locale }: SectionHeroProps) => {
     : undefined;
 
   return (
-    <section className="section py-5">
+    <section className="px-0 py-0 md:px-4 md:py-5">
       <div
-        className="container min-h-[700px] overflow-hidden rounded-2xl bg-cover bg-center bg-no-repeat p-10 text-white"
+        className="container min-h-[600px] md:min-h-[700px] overflow-hidden md:rounded-2xl bg-cover bg-center bg-no-repeat p-10 text-white"
         style={
           backgroundUrl
             ? {
@@ -27,7 +27,7 @@ export const SectionHero = async ({ locale }: SectionHeroProps) => {
             : undefined
         }
       >
-        <div className="flex min-h-[580px] flex-col justify-end space-y-8">
+        <div className="flex min-h-[480px] md:min-h-[580px] flex-col justify-center lg:justify-end space-y-8">
           <div className="max-w-3xl space-y-6">
             <h1 className="heading-2 text-white">
               {hero?.title ?? "Hero title"}

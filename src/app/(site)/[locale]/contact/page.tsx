@@ -57,9 +57,9 @@ export default async function ContactPage({ params }: ContactPageProps) {
       {/* Main Contact Section with Image */}
       <section className="section">
         <div className="container">
-          <h1 className="heading-2 mb-8 md:mb-12 text-center">{contact.title}</h1>
+          <h1 className="heading-2 mb-4 text-center">{contact.title}</h1>
           {contact.subtitle ? (
-            <p className="text-lg text-gray-600 mb-12 text-center max-w-2xl mx-auto">
+            <p className="text-lg text-gray-600 mb-10 text-center max-w-2xl mx-auto">
               {contact.subtitle}
             </p>
           ) : null}
