@@ -1,3 +1,4 @@
+import Image from "next/image";
 import Link from "next/link";
 import { LangSwitcher } from "@/components/shared/lang-switcher";
 import { CategoriesDropdown } from "./CategoriesDropdown";
@@ -23,9 +24,17 @@ export const Header = async ({ locale }: HeaderProps) => {
         {/* Logo */}
         <Link
           href={`/${locale}`}
-          className="text-xl font-bold text-primary hover:opacity-80 transition-opacity"
+          className="flex items-center"
+          aria-label="Turtle Wax home"
         >
-          TurtleWax
+          <Image
+            src="/images/logo.png"
+            alt="Turtle Wax logo"
+            width={236}
+            height={214}
+            className="h-10 w-auto"
+            priority
+          />
         </Link>
 
         {/* Desktop Navigation */}
