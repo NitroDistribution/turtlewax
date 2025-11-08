@@ -3,6 +3,8 @@ import type { StructureResolver } from "sanity/desk";
 const HOME_HERO_DOCUMENT_ID = "homeHeroSection";
 const ABOUT_PAGE_DOCUMENT_ID = "aboutPage";
 const CONTACT_PAGE_DOCUMENT_ID = "contactPage";
+const PRIVACY_PAGE_DOCUMENT_ID = "privacyPage";
+const TERMS_PAGE_DOCUMENT_ID = "termsPage";
 
 const deskStructure: StructureResolver = (S) =>
   S.list()
@@ -37,6 +39,22 @@ const deskStructure: StructureResolver = (S) =>
                     .title("Contact Page")
                     .schemaType("contactPage")
                     .documentId(CONTACT_PAGE_DOCUMENT_ID)
+                ),
+              S.listItem()
+                .title("Privacy Policy")
+                .child(
+                  S.document()
+                    .title("Privacy Policy")
+                    .schemaType("privacyPage")
+                    .documentId(PRIVACY_PAGE_DOCUMENT_ID)
+                ),
+              S.listItem()
+                .title("Terms & Conditions")
+                .child(
+                  S.document()
+                    .title("Terms & Conditions")
+                    .schemaType("termsPage")
+                    .documentId(TERMS_PAGE_DOCUMENT_ID)
                 ),
             ])
         ),

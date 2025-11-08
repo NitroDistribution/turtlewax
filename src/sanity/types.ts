@@ -28,6 +28,12 @@ export type AboutPageContent = {
   videoUrl?: string | null;
 };
 
+export type LegalPageContent = {
+  _id: string;
+  title: string;
+  content: string[];
+};
+
 export type ProductMediaContent = {
   sectionTitle?: string | null;
   sectionSubtitle?: string | null;

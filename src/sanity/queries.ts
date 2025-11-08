@@ -9,6 +9,7 @@ import type {
   ContactPageContent,
   HeroContent,
   HomeSectionsCopy,
+  LegalPageContent,
   Product,
   ProductDetail,
 } from "./types";
@@ -109,6 +110,32 @@ const contactPageQuery = groq`
 export const getContactPage = cache(async (locale: Locale) => {
   const contact = await sanityClient.fetch<ContactPageContent | null>(contactPageQuery, { locale });
   return contact;
+});
+
+const legalPageFields = `{
+  _id,
+  "title": coalesce(select($locale == "az" => titleAz, titleRu), titleAz),
+  "content": coalesce(select($locale == "az" => contentAz, contentRu), contentAz)
+}`;
+
+const privacyPageQuery = groq`
+  *[_type == "privacyPage"][0]
+  ${legalPageFields}
+`;
+
+export const getPrivacyPage = cache(async (locale: Locale) => {
+  const page = await sanityClient.fetch<LegalPageContent | null>(privacyPageQuery, { locale });
+  return page;
+});
+
+const termsPageQuery = groq`
+  *[_type == "termsPage"][0]
+  ${legalPageFields}
+`;
+
+export const getTermsPage = cache(async (locale: Locale) => {
+  const page = await sanityClient.fetch<LegalPageContent | null>(termsPageQuery, { locale });
+  return page;
 });
 
 const whatsappDefaultsQuery = groq`
