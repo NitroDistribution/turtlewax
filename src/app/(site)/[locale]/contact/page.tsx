@@ -1,12 +1,18 @@
 import Image from "next/image";
 import { notFound } from "next/navigation";
-import { Phone, Mail, MessageCircle, Instagram, Clock } from "lucide-react";
+import { Phone, Mail, Clock } from "lucide-react";
 
 import { isLocale, type Locale } from "@/lib/i18n";
 import { getContactPage } from "@/sanity/queries";
 
 type ContactPageProps = {
   params: Promise<{ locale: string }>;
+};
+
+const SOCIAL_ICON_MAP: Record<string, { src: string; alt: string }> = {
+  telegram: { src: "/images/socials-icon/telegram.svg", alt: "Telegram" },
+  instagram: { src: "/images/socials-icon/instagram.svg", alt: "Instagram" },
+  whatsapp: { src: "/images/socials-icon/whatsapp.svg", alt: "WhatsApp" },
 };
 
 export default async function ContactPage({ params }: ContactPageProps) {
@@ -39,18 +45,6 @@ export default async function ContactPage({ params }: ContactPageProps) {
     : [];
   const missingImageMessage =
     locale === "ru" ? "Загрузите изображение в Sanity" : "Sanity-də şəkil əlavə edin";
-
-  const socialVariantMap: Record<
-    string,
-    { icon: typeof MessageCircle; color: string }
-  > = {
-    telegram: { icon: MessageCircle, color: "hover:bg-[#0088cc]" },
-    instagram: {
-      icon: Instagram,
-      color: "hover:bg-gradient-to-br hover:from-purple-600 hover:to-pink-500",
-    },
-    whatsapp: { icon: Phone, color: "hover:bg-[#25D366]" },
-  };
 
   return (
     <>
@@ -151,11 +145,7 @@ export default async function ContactPage({ params }: ContactPageProps) {
             <div className="flex flex-wrap gap-6 justify-center max-w-4xl mx-auto">
               {socialLinks.map((social, index) => {
                 const platformKey = (social.platform ?? "").toLowerCase();
-                const variant = socialVariantMap[platformKey] ?? {
-                  icon: MessageCircle,
-                  color: "hover:bg-primary",
-                };
-                const Icon = variant.icon;
+                const icon = SOCIAL_ICON_MAP[platformKey] ?? SOCIAL_ICON_MAP.telegram;
                 const label = social.label || social.platform || `Social ${index + 1}`;
                 return (
                   <a
@@ -163,12 +153,16 @@ export default async function ContactPage({ params }: ContactPageProps) {
                     href={social.url ?? "#"}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className={`group flex items-center gap-4 bg-white rounded-2xl border border-gray-200 px-8 py-6 hover:shadow-lg hover:border-transparent transition-all ${variant.color}`}
+                    className="group flex items-center gap-4 bg-white rounded-2xl border border-gray-200 px-8 py-6 hover:shadow-lg hover:border-primary transition-all"
                   >
-                    <div className="w-12 h-12 bg-gray-100 rounded-full flex items-center justify-center group-hover:bg-white/20 transition-colors">
-                      <Icon className="w-6 h-6 text-gray-700 group-hover:text-white transition-colors" />
-                    </div>
-                    <span className="text-lg font-semibold text-gray-900 group-hover:text-white transition-colors">
+                    <Image
+                      src={icon.src}
+                      alt={icon.alt}
+                      width={40}
+                      height={40}
+                      className="transition-transform duration-200 group-hover:scale-105"
+                    />
+                    <span className="text-lg font-semibold text-gray-900 group-hover:text-primary">
                       {label}
                     </span>
                   </a>

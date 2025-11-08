@@ -1,6 +1,6 @@
+import Image from "next/image";
 import Link from "next/link";
-import { Phone, Mail, MessageCircle, Instagram, Download } from "lucide-react";
-import type { LucideIcon } from "lucide-react";
+import { Phone, Mail, Download } from "lucide-react";
 import type { Locale } from "@/lib/i18n";
 import { getContactPage, getSiteSettings } from "@/sanity/queries";
 
@@ -8,10 +8,10 @@ type FooterProps = {
   locale: Locale;
 };
 
-const SOCIAL_ICON_MAP: Record<string, LucideIcon> = {
-  telegram: MessageCircle,
-  instagram: Instagram,
-  whatsapp: MessageCircle,
+const SOCIAL_ICON_MAP: Record<string, { src: string; alt: string }> = {
+  telegram: { src: "/images/socials-icon/telegram.svg", alt: "Telegram" },
+  instagram: { src: "/images/socials-icon/instagram.svg", alt: "Instagram" },
+  whatsapp: { src: "/images/socials-icon/whatsapp.svg", alt: "WhatsApp" },
 };
 
 export const Footer = async ({ locale }: FooterProps) => {
@@ -42,23 +42,23 @@ export const Footer = async ({ locale }: FooterProps) => {
   };
 
   const contactInfo = {
-    phone: contactContent?.phone || "+994558944511",
-    phoneLabel: contactContent?.phoneLabel || (isAz ? "Telefon" : "Телефон"),
-    email: contactContent?.email || "office@turtlewax.az",
-    emailLabel: contactContent?.emailLabel || (isAz ? "E-poçt" : "Почта"),
+    phone: contactContent?.phone || null,
+    phoneLabel: contactContent?.phoneLabel || null,
+    email: contactContent?.email || null,
+    emailLabel: contactContent?.emailLabel || null,
   };
 
   const socialLinks = (contactContent?.socials || [])
     .map((social) => {
       if (!social?.url || !social.platform) return null;
-      const Icon = SOCIAL_ICON_MAP[social.platform] || MessageCircle;
+      const icon = SOCIAL_ICON_MAP[social.platform] || SOCIAL_ICON_MAP.telegram;
       return {
         name: social.label || social.platform,
         href: social.url,
-        icon: Icon,
+        icon,
       };
     })
-    .filter(Boolean) as Array<{ name: string; href: string; icon: LucideIcon }>;
+    .filter(Boolean) as Array<{ name: string; href: string; icon: { src: string; alt: string } }>;
 
   const catalog = {
     title: siteSettings?.catalogTitle || (isAz ? "Kataloq" : "Каталог"),
@@ -67,13 +67,13 @@ export const Footer = async ({ locale }: FooterProps) => {
   };
 
   return (
-    <footer className="bg-gray-900 text-gray-300" lang={locale}>
+    <footer className="bg-gray-100 text-gray-700" lang={locale}>
       <div className="container py-12 md:py-16 px-4">
         {/* Main Footer Grid */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 md:gap-12">
           {/* Pages Section */}
           <div>
-            <h3 className="text-white font-semibold text-lg mb-4">
+            <h3 className="text-gray-900 font-semibold text-lg mb-4">
               {footerSections.pages.title}
             </h3>
             <ul className="space-y-3">
@@ -81,7 +81,7 @@ export const Footer = async ({ locale }: FooterProps) => {
                 <li key={link.href}>
                   <Link
                     href={link.href}
-                    className="hover:text-white transition-colors"
+                    className="hover:text-gray-900 transition-colors"
                   >
                     {link.label}
                   </Link>
@@ -92,7 +92,7 @@ export const Footer = async ({ locale }: FooterProps) => {
 
           {/* Support Section */}
           <div>
-            <h3 className="text-white font-semibold text-lg mb-4">
+            <h3 className="text-gray-900 font-semibold text-lg mb-4">
               {footerSections.support.title}
             </h3>
             <ul className="space-y-3">
@@ -100,7 +100,7 @@ export const Footer = async ({ locale }: FooterProps) => {
                 <li key={link.href}>
                   <Link
                     href={link.href}
-                    className="hover:text-white transition-colors"
+                    className="hover:text-gray-900 transition-colors"
                   >
                     {link.label}
                   </Link>
@@ -111,67 +111,86 @@ export const Footer = async ({ locale }: FooterProps) => {
 
           {/* Contact Section */}
           <div>
-            <h3 className="text-white font-semibold text-lg mb-4">
+            <h3 className="text-gray-900 font-semibold text-lg mb-4">
               {isAz ? "Əlaqə" : "Контакты"}
             </h3>
             <ul className="space-y-3 text-sm">
-              <li>
-                <p className="text-gray-400 mb-1">{contactInfo.phoneLabel}</p>
-                <a
-                  href={`tel:${contactInfo.phone}`}
-                  className="flex items-center gap-2 hover:text-white transition-colors"
-                >
-                  <Phone className="w-4 h-4" />
-                  {contactInfo.phone}
-                </a>
-              </li>
-              <li>
-                <p className="text-gray-400 mb-1">{contactInfo.emailLabel}</p>
-                <a
-                  href={`mailto:${contactInfo.email}`}
-                  className="flex items-center gap-2 hover:text-white transition-colors"
-                >
-                  <Mail className="w-4 h-4" />
-                  {contactInfo.email}
-                </a>
-              </li>
+              {contactInfo.phone ? (
+                <li>
+                  {contactInfo.phoneLabel && (
+                    <p className="text-gray-600 mb-1">{contactInfo.phoneLabel}</p>
+                  )}
+                  <a
+                    href={`tel:${contactInfo.phone}`}
+                    className="flex items-center gap-2 hover:text-gray-900 transition-colors"
+                  >
+                    <Phone className="w-4 h-4" />
+                    {contactInfo.phone}
+                  </a>
+                </li>
+              ) : (
+                <li className="text-gray-500">
+                  {isAz ? "Telefon məlumatı əlavə edilməyib." : "Телефон не указан в CMS."}
+                </li>
+              )}
+              {contactInfo.email ? (
+                <li>
+                  {contactInfo.emailLabel && (
+                    <p className="text-gray-600 mb-1">{contactInfo.emailLabel}</p>
+                  )}
+                  <a
+                    href={`mailto:${contactInfo.email}`}
+                    className="flex items-center gap-2 hover:text-gray-900 transition-colors"
+                  >
+                    <Mail className="w-4 h-4" />
+                    {contactInfo.email}
+                  </a>
+                </li>
+              ) : (
+                <li className="text-gray-500">
+                  {isAz ? "E-poçt ünvanı əlavə edilməyib." : "Email не указан в CMS."}
+                </li>
+              )}
             </ul>
           </div>
 
           {/* Social Media Section */}
           <div>
-            <h3 className="text-white font-semibold text-lg mb-4">
+            <h3 className="text-gray-900 font-semibold text-lg mb-4">
               {isAz ? "Sosial şəbəkə" : "Социальные сети"}
             </h3>
-            <div className="flex gap-4">
-              {(socialLinks.length > 0 ? socialLinks : [
-                {
-                  name: "Telegram",
-                  href: "https://t.me/turtlewax_az",
-                  icon: MessageCircle,
-                },
-              ]).map((social) => {
-                const Icon = social.icon;
-                return (
+            {socialLinks.length > 0 ? (
+              <div className="flex gap-6">
+                {socialLinks.map((social) => (
                   <a
                     key={social.name}
                     href={social.href}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="w-10 h-10 bg-gray-800 rounded-full flex items-center justify-center hover:bg-primary hover:text-white transition-colors"
+                    className="flex items-center justify-center"
                     aria-label={social.name}
                   >
-                    <Icon className="w-5 h-5" />
+                    <Image
+                      src={social.icon.src}
+                      alt={social.icon.alt}
+                      width={40}
+                      height={40}
+                      className="transition-transform duration-200 hover:scale-110"
+                    />
                   </a>
-                );
-              })}
-            </div>
+                ))}
+              </div>
+            ) : (
+              <p className="text-sm text-gray-500">
+                {isAz ? "Sosial linklər hələ əlavə edilməyib." : "Ссылки на соцсети ещё не добавлены."}
+              </p>
+            )}
           </div>
 
           {/* Catalog Download */}
           <div>
-            <h3 className="text-white font-semibold text-lg mb-4">{catalog.title}</h3>
-            <p className="text-sm text-gray-400 mb-4">
+            <h3 className="text-gray-900 font-semibold text-lg mb-4">{catalog.title}</h3>
+            <p className="text-sm text-gray-600 mb-4">
               {isAz
                 ? "Son kataloqu yükləyin və bütün məhsulları nəzərdən keçirin."
                 : "Скачайте актуальный каталог со всеми продуктами."}
@@ -196,9 +215,17 @@ export const Footer = async ({ locale }: FooterProps) => {
         </div>
 
         {/* Bottom Copyright Bar */}
-        <div className="mt-12 pt-8 border-t border-gray-800">
+        <div className="mt-12 pt-8 border-t border-gray-200">
           <div className="flex items-center gap-3">
-            <span className="text-sm text-gray-400">
+            <Image
+              src="/images/footer_logo.png"
+              alt="Turtle Wax logo"
+              width={2480}
+              height={1771}
+              className="h-10 w-auto"
+              priority={false}
+            />
+            <span className="text-sm text-gray-600">
               Copyright © {new Date().getFullYear()} Turtle Wax.
             </span>
           </div>
