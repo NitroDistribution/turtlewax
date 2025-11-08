@@ -66,6 +66,16 @@ export type ContactPageContent = {
   }> | null;
 };
 
+export type SiteSettingsContent = {
+  _id: string;
+  catalogTitle?: string | null;
+  catalogCta?: string | null;
+  catalogFile?: {
+    url?: string;
+    originalFilename?: string;
+  } | null;
+};
+
 export type HomeSectionCopy = {
   eyebrow?: string | null;
   title?: string | null;

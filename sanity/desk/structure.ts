@@ -5,6 +5,7 @@ const ABOUT_PAGE_DOCUMENT_ID = "aboutPage";
 const CONTACT_PAGE_DOCUMENT_ID = "contactPage";
 const PRIVACY_PAGE_DOCUMENT_ID = "privacyPage";
 const TERMS_PAGE_DOCUMENT_ID = "termsPage";
+const SITE_SETTINGS_DOCUMENT_ID = "siteSettings";
 
 const deskStructure: StructureResolver = (S) =>
   S.list()
@@ -57,6 +58,14 @@ const deskStructure: StructureResolver = (S) =>
                     .documentId(TERMS_PAGE_DOCUMENT_ID)
                 ),
             ])
+        ),
+      S.listItem()
+        .title("Site Settings")
+        .child(
+          S.document()
+            .title("Site Settings")
+            .schemaType("siteSettings")
+            .documentId(SITE_SETTINGS_DOCUMENT_ID)
         ),
       S.listItem()
         .title("Categories")

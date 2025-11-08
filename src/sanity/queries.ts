@@ -12,6 +12,7 @@ import type {
   LegalPageContent,
   Product,
   ProductDetail,
+  SiteSettingsContent,
 } from "./types";
 import { sanityClient } from "./client";
 
@@ -110,6 +111,23 @@ const contactPageQuery = groq`
 export const getContactPage = cache(async (locale: Locale) => {
   const contact = await sanityClient.fetch<ContactPageContent | null>(contactPageQuery, { locale });
   return contact;
+});
+
+const siteSettingsQuery = groq`
+  *[_type == "siteSettings"][0]{
+    _id,
+    "catalogTitle": coalesce(select($locale == "az" => catalogTitleAz, catalogTitleRu), catalogTitleAz),
+    "catalogCta": coalesce(select($locale == "az" => catalogCtaAz, catalogCtaRu), catalogCtaAz),
+    "catalogFile": catalogFile{
+      "url": asset->url,
+      "originalFilename": asset->originalFilename
+    }
+  }
+`;
+
+export const getSiteSettings = cache(async (locale: Locale) => {
+  const settings = await sanityClient.fetch<SiteSettingsContent | null>(siteSettingsQuery, { locale });
+  return settings;
 });
 
 const legalPageFields = `{
