@@ -11,7 +11,7 @@ const inter = Inter({
 const exo = Exo({
   variable: "--font-exo",
   subsets: ["latin"],
-  weight: ["400", "700"],
+  weight: ["400", "700"]
 });
 
 export const metadata: Metadata = {
