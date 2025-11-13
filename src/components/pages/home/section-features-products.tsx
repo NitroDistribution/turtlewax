@@ -29,7 +29,7 @@ export const SectionFeaturesProducts = async ({ locale }: SectionFeaturesProduct
     <section className="section">
       <div className="container space-y-12">
         <header className="space-y-3 text-center">
-          <p className="text-sm font-semibold uppercase tracking-[0.3em] text-primary/70">
+          <p className="text-sm font-semibold uppercase tracking-[0.15em] text-primary/70">
             {copy.eyebrow}
           </p>
           <h2 className="heading-2 text-balance">{copy.title}</h2>

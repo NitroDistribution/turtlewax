@@ -37,7 +37,7 @@ export const CategoryCarousel = ({ categories, locale, copy }: CategoryCarouselP
     <div className="space-y-8">
       <div className="flex flex-col gap-6 lg:flex-row lg:items-end lg:justify-between">
         <div className="space-y-2">
-          <p className="text-sm font-semibold uppercase tracking-[0.3em] text-primary/70">
+          <p className="text-sm font-semibold uppercase tracking-[0.15em] text-primary/70">
             {copy.eyebrow}
           </p>
           <h2 className="heading-2 text-balance">{copy.title}</h2>

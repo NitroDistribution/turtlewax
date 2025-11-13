@@ -113,7 +113,7 @@ export default async function CategoryPage({ params }: CategoryPageProps) {
           <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/30 to-transparent" />
 
           <div className="relative flex min-h-[360px] flex-col justify-end gap-4 p-10 text-white sm:min-h-[420px] lg:min-h-[520px]">
-            <p className="text-sm font-semibold uppercase tracking-[0.3em] text-primary/70">
+            <p className="text-sm font-semibold uppercase tracking-[0.15em] text-primary/70">
               {copy.eyebrow}
             </p>
             <h1 className="text-4xl font-bold tracking-tight sm:text-5xl lg:text-6xl">

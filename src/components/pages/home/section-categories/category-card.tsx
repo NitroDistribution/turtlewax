@@ -73,7 +73,10 @@ export const CategoryCard = ({
         <div className="absolute inset-0 z-10 bg-gradient-to-t from-black/65 via-black/10 to-transparent transition group-hover:from-black/75" />
 
         <div className="pointer-events-none absolute inset-x-0 bottom-0 z-20 p-6">
-          <p className="text-2xl font-semibold uppercase tracking-[0.2em] text-white">
+          <p
+            className="text-2xl font-semibold tracking-wide text-white"
+            style={{ fontFamily: "var(--font-exo)" }}
+          >
             {category.title}
           </p>
         </div>
