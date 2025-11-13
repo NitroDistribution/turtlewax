@@ -1,4 +1,4 @@
-import { defineField, defineType } from "sanity";
+import { defineArrayMember, defineField, defineType } from "sanity";
 
 export const productType = defineType({
   name: "product",
@@ -140,6 +140,32 @@ export const productType = defineType({
         }),
       ],
       validation: (rule) => rule.required(),
+    }),
+    defineField({
+      name: "galleryImages",
+      title: "Gallery Images",
+      type: "array",
+      description: "Optional additional images for the product detail gallery (displayed under the main image).",
+      of: [
+        defineArrayMember({
+          type: "image",
+          options: {
+            hotspot: true,
+          },
+          fields: [
+            defineField({
+              name: "altAz",
+              title: "Alt Text (AZ)",
+              type: "string",
+            }),
+            defineField({
+              name: "altRu",
+              title: "Alt Text (RU)",
+              type: "string",
+            }),
+          ],
+        }),
+      ],
     }),
     defineField({
       name: "media",

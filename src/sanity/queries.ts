@@ -293,6 +293,10 @@ const productBySlugQuery = groq`
       "url": asset->url,
       "alt": coalesce(select($locale == "az" => altAz, altRu), altAz)
     },
+    "galleryImages": galleryImages[]{
+      "url": asset->url,
+      "alt": coalesce(select($locale == "az" => altAz, altRu), altAz)
+    },
     "media": {
       "sectionTitle": coalesce(select($locale == "az" => media.sectionTitleAz, media.sectionTitleRu), media.sectionTitleAz),
       "sectionSubtitle": coalesce(select($locale == "az" => media.sectionSubtitleAz, media.sectionSubtitleRu), media.sectionSubtitleAz),

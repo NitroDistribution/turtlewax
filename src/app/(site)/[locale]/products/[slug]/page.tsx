@@ -1,9 +1,9 @@
-import Image from "next/image";
 import Link from "next/link";
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 
 import { Button } from "@/components/ui/button";
+import { ProductGallery } from "@/components/pages/products/ProductGallery";
 import { ProductMedia } from "@/components/pages/products/ProductMedia";
 import { getBuyNowLabel, getProductDetailCopy, isLocale, locales, type Locale } from "@/lib/i18n";
 import { buildWhatsAppLink } from "@/lib/whatsapp";
@@ -92,7 +92,6 @@ export default async function ProductPage({ params }: ProductPageProps) {
   const fallbackContactHref = `/${locale}/contact`;
   const buyNowHref = generatedWhatsappLink ?? fallbackContactHref;
   const buyNowIsExternal = /^https?:\/\//.test(buyNowHref);
-  const imageUrl = product.image?.url ? `${product.image.url}?auto=format` : null;
   const buyNowLabel = getBuyNowLabel(locale);
   const descriptionParagraphs = product.body
     ? product.body
@@ -113,22 +112,12 @@ export default async function ProductPage({ params }: ProductPageProps) {
           </Link>
 
           <div className="grid gap-12 lg:grid-cols-[minmax(0,1.1fr)_minmax(0,1fr)] lg:items-start">
-            <div className="relative aspect-square overflow-hidden rounded-xl border border-gray-200 bg-gradient-to-br from-gray-50 to-gray-100/50">
-              {imageUrl ? (
-                <Image
-                  src={imageUrl}
-                  alt={product.image?.alt || product.title}
-                  fill
-                  className="object-contain p-8"
-                  sizes="(min-width: 1024px) 50vw, 100vw"
-                  priority
-                />
-              ) : (
-                <div className="flex h-full items-center justify-center">
-                  <span className="text-sm text-muted-foreground">{imageFallback}</span>
-                </div>
-              )}
-            </div>
+            <ProductGallery
+              primaryImage={product.image}
+              galleryImages={product.galleryImages}
+              fallbackLabel={imageFallback}
+              fallbackAlt={product.image?.alt || product.title}
+            />
 
             <div className="space-y-6">
               <header className="space-y-3">

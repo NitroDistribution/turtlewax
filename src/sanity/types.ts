@@ -125,6 +125,10 @@ export type Product = {
     url?: string;
     alt?: string;
   };
+  galleryImages?: Array<{
+    url?: string;
+    alt?: string;
+  }> | null;
   categorySlug?: string | null;
   categoryTitle?: string | null;
   media?: ProductMediaContent | null;
