@@ -1,6 +1,6 @@
 import Image from "next/image";
 import { notFound } from "next/navigation";
-import { Phone, Mail, Clock } from "lucide-react";
+import { Phone, Mail, Clock, MapPin } from "lucide-react";
 
 import { isLocale, type Locale } from "@/lib/i18n";
 import { getContactPage } from "@/sanity/queries";
@@ -43,6 +43,12 @@ export default async function ContactPage({ params }: ContactPageProps) {
   const socialLinks = Array.isArray(contact.socials)
     ? contact.socials.filter((social) => Boolean(social?.url && social.platform))
     : [];
+  const retailCard = contact.retailLocationsCard;
+  const retailLocations = Array.isArray(retailCard?.locations)
+    ? retailCard?.locations.filter((location) => Boolean(location?.address || location?.locationName))
+    : [];
+  const hasRetailCard = Boolean(retailCard?.title || retailCard?.subtitle || retailLocations.length);
+  const mapLabel = locale === "ru" ? "Открыть на карте" : "Xəritədə bax";
   const missingImageMessage =
     locale === "ru" ? "Загрузите изображение в Sanity" : "Sanity-də şəkil əlavə edin";
 
@@ -124,6 +130,57 @@ export default async function ContactPage({ params }: ContactPageProps) {
                     {infoTitle ? <h3 className="text-lg font-semibold mb-1">{infoTitle}</h3> : null}
                     {infoPrimary ? <p className="text-gray-600 text-sm">{infoPrimary}</p> : null}
                     {infoSecondary ? <p className="text-gray-600 text-sm">{infoSecondary}</p> : null}
+                  </div>
+                </div>
+              ) : null}
+
+              {/* Retail Locations */}
+              {hasRetailCard ? (
+                <div className="flex items-start gap-4 p-6 bg-white rounded-2xl border border-gray-200 hover:shadow-lg transition-shadow">
+                  <div className="w-12 h-12 bg-primary/10 rounded-full flex items-center justify-center flex-shrink-0">
+                    <MapPin className="w-6 h-6 text-primary" />
+                  </div>
+                  <div>
+                    {retailCard?.title ? (
+                      <h3 className="text-lg font-semibold mb-1">{retailCard.title}</h3>
+                    ) : null}
+                    {retailCard?.subtitle ? (
+                      <p className="text-gray-600 text-sm mb-4 whitespace-pre-line">{retailCard.subtitle}</p>
+                    ) : null}
+                    {retailLocations.length ? (
+                      <ul className="space-y-4">
+                        {retailLocations.map((location) => (
+                          <li key={location._key ?? location.locationName} className="text-sm text-gray-600">
+                            {location.locationName ? (
+                              <p className="font-semibold text-gray-900">{location.locationName}</p>
+                            ) : null}
+                            {location.address ? (
+                              <p className="whitespace-pre-line">
+                                {location.address}
+                              </p>
+                            ) : null}
+                            {location.phone ? (
+                              <a
+                                href={`tel:${location.phone}`}
+                                className="block text-primary mt-1 hover:underline"
+                              >
+                                {location.phone}
+                              </a>
+                            ) : null}
+                            {location.mapUrl ? (
+                              <a
+                                href={location.mapUrl}
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                className="inline-flex items-center gap-1 text-xs text-gray-500 hover:text-primary"
+                              >
+                                {mapLabel}
+                              </a>
+                            ) : null}
+                          </li>
+                        ))}
+                      </ul>
+                    ) : null}
                   </div>
                 </div>
               ) : null}

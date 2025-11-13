@@ -171,6 +171,76 @@ export const contactPageType = defineType({
         }),
       ],
     }),
+    defineField({
+      name: "retailLocationsCard",
+      title: "Retail Locations Card",
+      type: "object",
+      fields: [
+        defineField({
+          name: "titleAz",
+          title: "Card Title (AZ)",
+          type: "string",
+        }),
+        defineField({
+          name: "titleRu",
+          title: "Card Title (RU)",
+          type: "string",
+        }),
+        defineField({
+          name: "subtitleAz",
+          title: "Card Subtitle (AZ)",
+          type: "text",
+          rows: 3,
+        }),
+        defineField({
+          name: "subtitleRu",
+          title: "Card Subtitle (RU)",
+          type: "text",
+          rows: 3,
+        }),
+        defineField({
+          name: "locations",
+          title: "Store Addresses",
+          type: "array",
+          of: [
+            defineField({
+              name: "storeAddress",
+              type: "object",
+              fields: [
+                defineField({
+                  name: "locationName",
+                  title: "Location Name",
+                  type: "string",
+                }),
+                defineField({
+                  name: "addressAz",
+                  title: "Address (AZ)",
+                  type: "text",
+                  rows: 3,
+                }),
+                defineField({
+                  name: "addressRu",
+                  title: "Address (RU)",
+                  type: "text",
+                  rows: 3,
+                }),
+                defineField({
+                  name: "phone",
+                  title: "Contact Phone",
+                  type: "string",
+                }),
+                defineField({
+                  name: "mapUrl",
+                  title: "Map URL",
+                  type: "url",
+                  validation: (rule) => rule.uri({ scheme: ["http", "https"] }),
+                }),
+              ],
+            }),
+          ],
+        }),
+      ],
+    }),
   ],
   preview: {
     select: {

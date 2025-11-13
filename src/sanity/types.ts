@@ -64,6 +64,17 @@ export type ContactPageContent = {
     label?: string | null;
     url?: string | null;
   }> | null;
+  retailLocationsCard?: {
+    title?: string | null;
+    subtitle?: string | null;
+    locations?: Array<{
+      _key?: string;
+      locationName?: string | null;
+      address?: string | null;
+      phone?: string | null;
+      mapUrl?: string | null;
+    }> | null;
+  } | null;
 };
 
 export type SiteSettingsContent = {

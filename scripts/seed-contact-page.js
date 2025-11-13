@@ -97,6 +97,30 @@ async function main() {
           url: "https://api.whatsapp.com/send?phone=994558944511",
         },
       ],
+      retailLocationsCard: {
+        titleAz: "Haradan ala bilərsiniz",
+        titleRu: "Где купить",
+        subtitleAz: "Rəsmi Turtle Wax tərəfdaşlarından məhsullarımızı əldə edin.",
+        subtitleRu: "Покупайте продукты Turtle Wax у официальных партнёров.",
+        locations: [
+          {
+            _key: "port-baku",
+            locationName: "Port Baku Mall",
+            addressAz: "Neftçilər pr. 153, Bakı",
+            addressRu: "пр. Нефтчиляр 153, Баку",
+            phone: "+994124040404",
+            mapUrl: "https://maps.google.com/?q=Port+Baku+Mall",
+          },
+          {
+            _key: "ganja-store",
+            locationName: "Gəncə Showroom",
+            addressAz: "Atatürk pr. 21, Gəncə",
+            addressRu: "пр. Ататюрка 21, Гянджа",
+            phone: "+994222020202",
+            mapUrl: "https://maps.google.com/?q=Ataturk+prospekti+21+Ganja",
+          },
+        ],
+      },
     })
     .commit();
 

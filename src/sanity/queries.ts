@@ -104,6 +104,17 @@ const contactPageQuery = groq`
       platform,
       label,
       url
+    },
+    "retailLocationsCard": {
+      "title": coalesce(select($locale == "az" => retailLocationsCard.titleAz, retailLocationsCard.titleRu), retailLocationsCard.titleAz),
+      "subtitle": coalesce(select($locale == "az" => retailLocationsCard.subtitleAz, retailLocationsCard.subtitleRu), retailLocationsCard.subtitleAz),
+      "locations": retailLocationsCard.locations[]{
+        _key,
+        locationName,
+        phone,
+        mapUrl,
+        "address": coalesce(select($locale == "az" => addressAz, addressRu), addressAz)
+      }
     }
   }
 `;
