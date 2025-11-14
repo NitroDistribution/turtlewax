@@ -4,6 +4,8 @@ import type { ReactNode } from "react";
 import { Footer } from "@/components/layout/footer";
 import { Header } from "@/components/layout/header";
 import { isLocale, locales, type Locale } from "@/lib/i18n";
+import { Analytics } from "@vercel/analytics/next";
+import { SpeedInsights } from "@vercel/speed-insights/next"
 
 type LocaleLayoutProps = {
   children: ReactNode;
@@ -32,6 +34,8 @@ export default async function LocaleLayout({
       <Header locale={locale} />
       <main>{children}</main>
       <Footer locale={locale} />
+      <Analytics />
+      <SpeedInsights />
     </>
   );
 }
