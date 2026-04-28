@@ -8,5 +8,5 @@ export const sanityClient = createClient({
   apiVersion,
   useCdn,
   token: readToken,
-  perspective: readToken ? "drafts" : "published",
+  perspective: "published",
 });
